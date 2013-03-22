@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://org.cujau/db/dao/DAO-XML" 
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+    <xs:element name="xsql">
+        <xs:annotation>
+            <xs:documentation>XSQL (XML-SQL) document defining SQL queries for a Data Access Object (DAO).</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="createQuery" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The SQL query used to create the concrete database elements associated with this
+                            DAO. The SQL query must create everything associated with this DAO including:
+
+                            * Table or tables 
+                            * Constraints 
+                            * Indexes
+
+                            NOTE: This query will not be called during the normal operation of this
+                            application. It is for unit testing and schema extraction.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="dropQuery" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The SQL query used to remove the concrete database elements associated with this
+                            DAO. The SQL query must remove everything associated with this DAO including:
+
+                            * Table or tables 
+                            * Constraints 
+                            * Indexes
+
+                            NOTE: The database elements removed in this query must be removed in the opposite
+                            order in which they were created. This ensures that all elements can be removed
+                            completely.
+
+                            NOTE: This method will not be called during the normal operation of this
+                            application. It is for unit testing.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="query" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            An SQL query used to perform some specific data manipulation or retrieval.
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="id" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>
+                                            The identifier of this query in the DAO.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

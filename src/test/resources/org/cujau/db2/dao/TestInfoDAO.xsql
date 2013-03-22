@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsql xmlns="http://org.cujau/db/dao/DAO-XML">
+    <createQuery>
+CREATE TABLE test_info (
+       id ${db.dialect.types.identity}, 
+       key VARCHAR( 256 ) NOT NULL,
+       val INTEGER NOT NULL
+)
+    </createQuery>
+    <dropQuery>
+DROP TABLE test_info
+    </dropQuery>
+    <query id="insert">
+INSERT INTO test_info ( key, val ) VALUES( ?, ? )    
+    </query>
+    <query id="insertPostMigrate">
+INSERT INTO test_info ( key, val, prio ) VALUES( ?, ?, ? )    
+    </query>
+    <query id="selectAll">
+SELECT * FROM test_info
+    </query>
+</xsql>

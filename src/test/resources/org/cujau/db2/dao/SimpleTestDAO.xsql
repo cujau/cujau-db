@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsql xmlns="http://org.cujau/db/dao/DAO-XML">
+    <createQuery>
+        CREATE TABLE ${db.prefix}simple_test (
+            id ${db.dialect.types.identity},
+            name VARCHAR( 256 ) NOT NULL,
+            is_useful ${db.dialect.types.boolean} NOT NULL DEFAULT 1,
+            symbol VARCHAR( 256 ),
+            PRIMARY KEY ( id ),
+            UNIQUE( name ),
+        );
+    </createQuery>
+    <dropQuery>
+        DROP TABLE ${db.prefix}simple_test;
+    </dropQuery>
+    
+    <query id="update">
+        UPDATE ${db.prefix}simple_test SET
+            is_useful = :is_useful,
+            name = :name
+            symbol = :symbol
+		WHERE id = :id
+    </query>
+</xsql>

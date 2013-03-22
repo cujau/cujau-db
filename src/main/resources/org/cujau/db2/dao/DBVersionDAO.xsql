@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsql xmlns="http://org.cujau/db/dao/DAO-XML">
+    <createQuery>
+		CREATE TABLE ${db.prefix}db_version (
+    		version INTEGER NOT NULL,
+    		PRIMARY KEY( version )
+		);
+		INSERT INTO ${db.prefix}db_version VALUES ( 0 );
+    </createQuery>
+    
+    <dropQuery>
+		DROP TABLE ${db.prefix}db_version;
+    </dropQuery>
+    
+    <query id="getVersion">
+		SELECT version FROM ${db.prefix}db_version;
+    </query>
+    
+    <query id="setVersion">
+		UPDATE ${db.prefix}db_version SET version = ?;
+    </query>
+</xsql>
