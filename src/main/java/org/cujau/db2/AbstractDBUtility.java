@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -391,6 +394,29 @@ public abstract class AbstractDBUtility {
             addDefaultUserProperties( props );
         }
         return props;
+    }
+
+    public String getDatabaseAndDriverInfo() {
+        StringBuilder buf = new StringBuilder();
+        Connection con = null;
+        try {
+            con = getDataSource().getConnection();
+            DatabaseMetaData metadata = con.getMetaData();
+            buf.append( metadata.getDatabaseProductName() ).append( "(" );
+            buf.append( metadata.getDatabaseProductVersion() ).append( "); " );
+            buf.append( metadata.getDriverName() ).append( "(" );
+            buf.append( metadata.getDriverVersion() ).append( ")" );
+        } catch ( SQLException e ) {
+            buf.append( e.getMessage() );
+        } finally {
+            if ( con != null ) {
+                try {
+                    con.close();
+                } catch ( SQLException e ) {
+                }
+            }
+        }
+        return buf.toString();
     }
 
     protected void addDefaultUserProperties( Properties ps ) {
