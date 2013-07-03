@@ -78,6 +78,14 @@ public abstract class DAO {
         return queryMap.get( id );
     }
 
+    public String getQueryWithReplacement( String id, String placeholderPropName, String replacementStr ) {
+        String baseStr = queryMap.get( id );
+        if ( baseStr == null ) {
+            return null;
+        }
+        return baseStr.replace( "${" + placeholderPropName + "}", replacementStr );
+    }
+
     /**
      * Executes any SELECT statement on the connected database.
      */
@@ -85,14 +93,6 @@ public abstract class DAO {
             throws Exception {
         Statement statment = template.getDataSource().getConnection().createStatement();
         return statment.executeQuery( select );
-    }
-
-    protected String getQueryWithReplacement( String id, String placeholderPropName, String replacementStr ) {
-        String baseStr = queryMap.get( id );
-        if ( baseStr == null ) {
-            return null;
-        }
-        return baseStr.replace( "${" + placeholderPropName + "}", replacementStr );
     }
 
     /**
