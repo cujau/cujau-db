@@ -76,6 +76,12 @@ public class BulkUpdateTemplate {
 
     private void endWithoutCommit() {
         if ( canCleanupConnection ) {
+            // Set it auto-commit back to default setting.
+            try {
+                connection.setAutoCommit( true );
+            } catch ( SQLException e ) {
+                // Ignore as will probably get thrown in cleanup too.
+            }
             JDBCUtils.cleanup( connection, stmt, null );
         } else {
             JDBCUtils.cleanup( null, stmt, null );
@@ -85,8 +91,6 @@ public class BulkUpdateTemplate {
     public void end() {
         try {
             connection.commit();
-            // Set it auto-commit back to default setting.
-            connection.setAutoCommit( true );
         } catch ( SQLException e ) {
             throw new CujauJDBCMappingException( e );
         } finally {
@@ -96,8 +100,6 @@ public class BulkUpdateTemplate {
     public void endWithRollback() {
         try {
             connection.rollback();
-            // Set it auto-commit back to default setting.
-            connection.setAutoCommit( true );
         } catch ( SQLException e ) {
             throw new CujauJDBCMappingException( e );
         } finally {
