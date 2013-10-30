@@ -5,7 +5,7 @@
 
     <groupId>org.cujau</groupId>
     <artifactId>cujau-db</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>CUJAU-DB</name>
     <description>Common Utilities for Java Appliation Use - Database Framework</description>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.0.12</version>
+            <version>1.0.13</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.3.164</version>
+            <version>1.3.172</version>
             <scope>test</scope>
         </dependency>
 

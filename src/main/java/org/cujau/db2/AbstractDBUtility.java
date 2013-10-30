@@ -179,11 +179,30 @@ public abstract class AbstractDBUtility {
      */
     protected abstract int getPostSchemaCreationDBVersion();
 
+    /**
+     * Returns a list of Migration objects.
+     * 
+     * @param props
+     * @return The list of Migration objects or <tt>null</tt> if no migrations are necessary.
+     * @throws MigrationInitializationException
+     */
     public abstract List<Migration> instantiateMigrations( Properties props )
             throws MigrationInitializationException;
 
+    /**
+     * The lowest migration number (i.e. the last migration) to be used in a down migration.
+     * Typically the lowest supported schema version number.
+     * 
+     * @return
+     */
     public abstract int getLowestMigrationNumber();
 
+    /**
+     * The highest migration number to which a schema will be migrated up. Typically this is the
+     * same as the {@link #getPostSchemaCreationDBVersion} value.
+     * 
+     * @return
+     */
     public abstract int getHighestMigrationNumber();
 
     public void createDBSchema() {
