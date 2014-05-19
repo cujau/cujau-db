@@ -1,6 +1,6 @@
 package org.cujau.db2.dto;
 
-import org.cujau.db2.dto.IdPrivateKeyDTO;
+import java.math.BigDecimal;
 
 public class SimpleTestDTO implements IdPrivateKeyDTO {
 
@@ -8,6 +8,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
     String name;
     boolean isUseful;
     String symbol;
+    BigDecimal cash;
 
     @Override
     public long getId() {
@@ -43,6 +44,14 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
         this.symbol = sym;
     }
 
+    public BigDecimal getCash() {
+        return cash;
+    }
+
+    public void setCash( BigDecimal c ) {
+        this.cash = c;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -51,6 +60,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
         result = prime * result + ( isUseful ? 1231 : 1237 );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
         result = prime * result + ( ( symbol == null ) ? 0 : symbol.hashCode() );
+        result = prime * result + ( ( cash == null ) ? 0 : cash.hashCode() );
         return result;
     }
 
@@ -84,6 +94,13 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
                 return false;
             }
         } else if ( !symbol.equals( other.symbol ) ) {
+            return false;
+        }
+        if ( cash == null ) {
+            if ( other.cash != null ) {
+                return false;
+            }
+        } else if ( !cash.equals( other.cash ) ) {
             return false;
         }
         return true;

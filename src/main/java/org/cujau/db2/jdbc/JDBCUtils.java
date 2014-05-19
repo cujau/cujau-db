@@ -109,6 +109,11 @@ final class JDBCUtils {
         return stmt;
     }
 
+    // This is ugly, but is more performant than a more elegant solution.
+    //
+    // You can performance test this with JDBCUtilsTest. The more elegant solution is commented out
+    // below (#setValue2 and CujauJDBCType enum).
+    //
     private static void setValue( PreparedStatement stmt, int ct, Object arg )
             throws SQLException {
         if ( arg instanceof String ) {
@@ -134,7 +139,6 @@ final class JDBCUtils {
         } else {
             // ignore it.
         }
-
     }
 
     static void cleanup( Connection connection, Statement stmt, ResultSet rs ) {
@@ -165,4 +169,80 @@ final class JDBCUtils {
         }
     }
 
+    // This solution is less performance than the ugly mega-if-else.
+    // 
+    // private static void setValue2( PreparedStatement stmt, int ct, Object arg )
+    // throws SQLException {
+    // CujauJDBCTypes type = CujauJDBCTypes.fromClass( arg );
+    // switch ( type ) {
+    // case BIGDECIMAL:
+    // stmt.setBigDecimal( ct, (BigDecimal) arg );
+    // break;
+    // case BOOLEAN:
+    // stmt.setBoolean( ct, (Boolean) arg );
+    // break;
+    // case BYTE:
+    // stmt.setByte( ct, (Byte) arg );
+    // break;
+    // case DATE:
+    // stmt.setTimestamp( ct, new Timestamp( ( (Date) arg ).getTime() ) );
+    // break;
+    // case DOUBLE:
+    // stmt.setDouble( ct, (Double) arg );
+    // break;
+    // case FLOAT:
+    // stmt.setFloat( ct, (Float) arg );
+    // break;
+    // case INTEGER:
+    // stmt.setInt( ct, (Integer) arg );
+    // break;
+    // case LONG:
+    // stmt.setLong( ct, (Long) arg );
+    // break;
+    // case NULL:
+    // stmt.setNull( ct, Types.NULL );
+    // break;
+    // case STRING:
+    // stmt.setString( ct, (String) arg );
+    // break;
+    // default:
+    // break;
+    // }
+    // }
+    //
+    // private static enum CujauJDBCTypes {
+    // STRING( String.class ), //
+    // INTEGER( Integer.class ), //
+    // BIGDECIMAL( BigDecimal.class ), //
+    // DOUBLE( Double.class ), //
+    // DATE( Date.class ), //
+    // BOOLEAN( Boolean.class ), //
+    // LONG( Long.class ), //
+    // BYTE( Byte.class ), //
+    // FLOAT( Float.class ), //
+    // NULL( null );
+    //
+    // private static final Map<Class<?>, CujauJDBCTypes> types = new HashMap<Class<?>,
+    // CujauJDBCTypes>();
+    // static {
+    // for ( CujauJDBCTypes tp : values() ) {
+    // if ( tp.klass != null ) {
+    // types.put( tp.klass, tp );
+    // }
+    // }
+    // }
+    //
+    // public static CujauJDBCTypes fromClass( Object arg ) {
+    // if ( arg == null ) {
+    // return NULL;
+    // }
+    // return types.get( arg.getClass() );
+    // }
+    //
+    // private Class<?> klass;
+    //
+    // CujauJDBCTypes( Class<?> klass ) {
+    // this.klass = klass;
+    // }
+    // }
 }

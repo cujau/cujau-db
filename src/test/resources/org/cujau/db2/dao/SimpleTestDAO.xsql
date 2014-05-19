@@ -6,6 +6,7 @@
             name VARCHAR( 256 ) NOT NULL,
             is_useful ${db.dialect.types.boolean} NOT NULL DEFAULT 1,
             symbol VARCHAR( 256 ),
+            cash DECIMAL(24,8) NOT NULL,
             PRIMARY KEY ( id ),
             UNIQUE( name ),
         );
@@ -17,8 +18,9 @@
     <query id="update">
         UPDATE ${db.prefix}simple_test SET
             is_useful = :is_useful,
-            name = :name
-            symbol = :symbol
+            name = :name,
+            symbol = :symbol,
+            cash = :cash
 		WHERE id = :id
     </query>
 </xsql>

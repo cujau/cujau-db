@@ -32,10 +32,11 @@ public class SimpleTestDAO extends AbstractInsertUpdateDAO<SimpleTestDTO> {
     }
 
     @Override
-    protected Map<String, Object> fillParams( SimpleTestDTO dtoObj, Map<String, Object> params ) {
+    public Map<String, Object> fillParams( SimpleTestDTO dtoObj, Map<String, Object> params ) {
         params.put( "is_useful", dtoObj.isUseful() );
         params.put( "name", dtoObj.getName() );
         params.put( "symbol", dtoObj.getSymbol() );
+        params.put( "cash", dtoObj.getCash() );
         return params;
     }
 
@@ -54,11 +55,12 @@ public class SimpleTestDAO extends AbstractInsertUpdateDAO<SimpleTestDTO> {
     }
 
     @Override
-    protected List<String> getColumnNames() {
+    public List<String> getColumnNames() {
         List<String> columns = new ArrayList<String>();
         columns.add( "is_useful" );
         columns.add( "name" );
         columns.add( "symbol" );
+        columns.add( "cash" );
         return columns;
     }
 }

@@ -57,6 +57,10 @@ public abstract class AbstractInsertUpdateDAO<E extends IdPrivateKeyDTO> extends
         super( props, dbutil );
     }
 
+    public String getInsertQuery() {
+        return insertQuery;
+    }
+    
     @Override
     public void setDataSource( DataSource dataSource ) {
         super.setDataSource( dataSource );
