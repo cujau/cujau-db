@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 
+import java.math.BigDecimal;
+
 import org.cujau.db2.AbstractDBUtility;
 import org.cujau.db2.SimpleTestDBUtility;
 import org.cujau.db2.dao.AbstractInsertUpdateDAO;
@@ -27,6 +29,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
         SimpleTestDTO o = new SimpleTestDTO();
         o.setName( "Bedag Informatik SA" );
         o.setUseful( false );
+        o.setCash( BigDecimal.valueOf( 123.234 ) );
         getDAO().insert( o );
         return o;
     }
@@ -36,6 +39,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
         assertEquals( "Bedag Informatik SA", o.getName() );
         assertFalse( o.isUseful() );
         assertNull( o.getSymbol() );
+        assertTrue( BigDecimal.valueOf( 123.234000000 ).compareTo( o.getCash() ) == 0 );
     }
 
     @Override
@@ -43,6 +47,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
         o.setName( "Bob Smith's Car Wash" );
         o.setUseful( true );
         o.setSymbol( "SCW" );
+        o.setCash( BigDecimal.valueOf( 543.654 ) );
         getDAO().update( o );
     }
 
@@ -51,6 +56,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
         assertEquals( "Bob Smith's Car Wash", o.getName() );
         assertTrue( o.isUseful() );
         assertEquals( "SCW", o.getSymbol() );
+        assertTrue( BigDecimal.valueOf( 543.654 ).compareTo( o.getCash() ) == 0 );
     }
 
     @Override
@@ -59,6 +65,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
         o.setName( "Smith Car Wash SA" );
         o.setUseful( false );
         o.setSymbol( "SCW" );
+        o.setCash( BigDecimal.valueOf( 435.0002435 ) );
         getDAO().insert( o );
         return o;
     }

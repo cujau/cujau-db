@@ -31,17 +31,17 @@ public class BulkUpdateTemplateTest {
     public void testShouldWork() {
         BulkUpdateTemplate bulk =
             new BulkUpdateTemplate( dbutil.getDataSource(),
-                                    "insert into simple_test( name, is_useful, symbol ) values( ?, ?, ? )" );
+                                    "insert into simple_test( name, is_useful, symbol, cash ) values( ?, ?, ?, ? )" );
         bulk.begin();
-        bulk.update( "nick", true, "NPR" );
-        bulk.update( "beth", true, "BAR" );
+        bulk.update( "nick", true, "NPR", 1.34 );
+        bulk.update( "beth", true, "BAR", 2.56 );
         bulk.end();
 
         assertEquals( 2, dbutil.getSimpleTestDAO().selectCount() );
 
         bulk.begin();
-        bulk.update( "fred", false, "FST" );
-        bulk.update( "barny", true, "BNY" );
+        bulk.update( "fred", false, "FST", 5.55 );
+        bulk.update( "barny", true, "BNY", 7.77 );
         bulk.endWithRollback();
 
         assertEquals( 2, dbutil.getSimpleTestDAO().selectCount() );
@@ -53,10 +53,10 @@ public class BulkUpdateTemplateTest {
         boolean exceptionThrown = false;
         BulkUpdateTemplate bulk =
             new BulkUpdateTemplate( dbutil.getDataSource(),
-                                    "insert into simple_test( name, is_useful, symbol ) values( ?, ?, ? )" );
+                                    "insert into simple_test( name, is_useful, symbol, cash ) values( ?, ?, ?, ? )" );
         bulk.begin();
-        bulk.update( "nick", true, "NPR" );
-        bulk.update( "beth", true, "BAR" );
+        bulk.update( "nick", true, "NPR", 12.34 );
+        bulk.update( "beth", true, "BAR", 45.67 );
 
         try {
             // This will throw a CujauJDBCExecutionException because it is trying to lock the table
@@ -86,8 +86,8 @@ public class BulkUpdateTemplateTest {
         exceptionThrown = false;
 
         bulk.begin();
-        bulk.update( "bill", true, "BIL" );
-        bulk.update( "fred", true, "FRD" );
+        bulk.update( "bill", true, "BIL", 345.234 );
+        bulk.update( "fred", true, "FRD", 234.00234 );
 
         try {
             // This will throw a CujauJDBCExecutionException because it is trying to lock the table

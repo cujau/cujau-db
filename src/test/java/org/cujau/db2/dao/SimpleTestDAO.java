@@ -50,6 +50,7 @@ public class SimpleTestDAO extends AbstractInsertUpdateDAO<SimpleTestDTO> {
             row.setUseful( rs.getBoolean( "is_useful" ) );
             row.setName( rs.getString( "name" ) );
             row.setSymbol( rs.getString( "symbol" ) );
+            row.setCash( rs.getBigDecimal( "cash" ) );
             return row;
         }
     }

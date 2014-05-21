@@ -56,11 +56,11 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) ( id ^ ( id >>> 32 ) );
-        result = prime * result + ( isUseful ? 1231 : 1237 );
-        result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
-        result = prime * result + ( ( symbol == null ) ? 0 : symbol.hashCode() );
-        result = prime * result + ( ( cash == null ) ? 0 : cash.hashCode() );
+        result = ( prime * result ) + ( ( cash == null ) ? 0 : cash.hashCode() );
+        result = ( prime * result ) + (int) ( id ^ ( id >>> 32 ) );
+        result = ( prime * result ) + ( isUseful ? 1231 : 1237 );
+        result = ( prime * result ) + ( ( name == null ) ? 0 : name.hashCode() );
+        result = ( prime * result ) + ( ( symbol == null ) ? 0 : symbol.hashCode() );
         return result;
     }
 
@@ -76,6 +76,13 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
             return false;
         }
         SimpleTestDTO other = (SimpleTestDTO) obj;
+        if ( cash == null ) {
+            if ( other.cash != null ) {
+                return false;
+            }
+        } else if ( cash.compareTo( other.cash ) != 0 ) {
+            return false;
+        }
         if ( id != other.id ) {
             return false;
         }
@@ -94,13 +101,6 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
                 return false;
             }
         } else if ( !symbol.equals( other.symbol ) ) {
-            return false;
-        }
-        if ( cash == null ) {
-            if ( other.cash != null ) {
-                return false;
-            }
-        } else if ( !cash.equals( other.cash ) ) {
             return false;
         }
         return true;
