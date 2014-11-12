@@ -2,15 +2,16 @@ package org.cujau.db2.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.cujau.db2.AbstractDBUtility;
 import org.cujau.db2.SimpleTestDBUtility;
-import org.cujau.db2.dao.AbstractInsertUpdateDAO;
 import org.cujau.db2.dto.SimpleTestDTO;
+import org.junit.Test;
 
 public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestDTO> {
 
@@ -27,7 +28,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
     @Override
     protected SimpleTestDTO createFirst() {
         SimpleTestDTO o = new SimpleTestDTO();
-        o.setName( "Bedag Informatik SA" );
+        o.setName( "TransparenTech LLC" );
         o.setUseful( false );
         o.setCash( BigDecimal.valueOf( 123.234 ) );
         getDAO().insert( o );
@@ -36,7 +37,7 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
 
     @Override
     protected void assertFirstFields( SimpleTestDTO o ) {
-        assertEquals( "Bedag Informatik SA", o.getName() );
+        assertEquals( "TransparenTech LLC", o.getName() );
         assertFalse( o.isUseful() );
         assertNull( o.getSymbol() );
         assertTrue( BigDecimal.valueOf( 123.234000000 ).compareTo( o.getCash() ) == 0 );
@@ -70,4 +71,18 @@ public class SimpleTestDAOTest extends AbstractInsertUpdateDAOTester<SimpleTestD
         return o;
     }
 
+    @Test
+    public void testSelect() {
+        createFirst();
+        createSecond();
+
+        List<SimpleTestDTO> all = getDAO().selectAll();
+        assertEquals( 2, all.size() );
+        
+        all = getDAO().selectAll( "symbol = 'SCW'" );
+        assertEquals( 1, all.size() );
+        
+        all = getDAO().selectAll( "is_useful = false" );
+        assertEquals( 2, all.size() );
+    }
 }

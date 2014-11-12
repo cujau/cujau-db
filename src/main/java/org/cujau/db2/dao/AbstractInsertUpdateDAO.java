@@ -60,7 +60,7 @@ public abstract class AbstractInsertUpdateDAO<E extends IdPrivateKeyDTO> extends
     public String getInsertQuery() {
         return insertQuery;
     }
-    
+
     @Override
     public void setDataSource( DataSource dataSource ) {
         super.setDataSource( dataSource );
@@ -153,13 +153,45 @@ public abstract class AbstractInsertUpdateDAO<E extends IdPrivateKeyDTO> extends
         return template.update( "DELETE FROM " + getTableName() );
     }
 
+    /**
+     * Seelct all items from the table. If an 'order by' clause is specified for this table via the
+     * {@link #getSelectAllOrderByClause()}, the items will be ordered accordingly.
+     * 
+     * @return A list of all items in this table.
+     */
     public List<E> selectAll() {
+        return doSelectWithOrderBy( "SELECT * FROM " + getTableName() );
+    }
+
+    /**
+     * Select all items from the table that match the given <tt>whereClause</tt>.
+     * 
+     * @param whereClause
+     *            The SQL 'where' clause to use when selecting items. It should not include the
+     *            'where' keyword itself, just the conditions (i.e. "a = 5 AND b = 'xyz'").
+     * @return A list of items that matched the query. If an 'order by' clause is specified for this
+     *         table (via the {@link #getSelectAllOrderByClause()}), the items will be ordered
+     *         accordingly.
+     */
+    public List<E> selectAll( String whereClause ) {
+        if ( whereClause == null || whereClause.isEmpty() ) {
+            return selectAll();
+        }
+
+        return doSelectWithOrderBy( "SELECT * FROM " + getTableName() + " where " + whereClause );
+    }
+
+    protected List<E> doSelectWithOrderBy( String query ) {
         String orderBy = getSelectAllOrderByClause();
         if ( orderBy == null ) {
-            return template.query( "SELECT * FROM " + getTableName(), mapper );
+            return doSelect( query );
         } else {
-            return template.query( "SELECT * FROM " + getTableName() + " " + orderBy, mapper );
+            return doSelect( query + " " + orderBy );
         }
+    }
+
+    protected List<E> doSelect( String query ) {
+        return template.query( query, mapper );
     }
 
     public long selectCount() {
@@ -285,7 +317,7 @@ public abstract class AbstractInsertUpdateDAO<E extends IdPrivateKeyDTO> extends
         }
         return new Date( ts.getTime() );
     }
-    
+
     public static Double getNullableDoubleColumn( ResultSet rs, String columnName )
             throws SQLException {
         Double ret = rs.getDouble( columnName );
