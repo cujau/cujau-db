@@ -85,11 +85,19 @@ public abstract class AbstractInsertUpdateDAO<E extends IdPrivateKeyDTO> extends
         mapper = createRowMapper();
     }
 
-    public void save( E dto ) {
+    /**
+     * Save this item to the database.
+     * 
+     * @param dto
+     * @return <tt>true</tt> if this item was inserted, <tt>false</tt> if it was updated.
+     */
+    public boolean save( E dto ) {
         if ( dto.getId() == -1 ) {
             insert( dto );
+            return true;
         } else {
             update( dto );
+            return false;
         }
     }
 
