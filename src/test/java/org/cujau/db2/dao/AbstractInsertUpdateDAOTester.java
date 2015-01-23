@@ -35,6 +35,10 @@ public abstract class AbstractInsertUpdateDAOTester<E extends IdPrivateKeyDTO> {
 
     protected abstract E createSecond();
 
+    protected int getDefaultItemCount() {
+        return 0;
+    }
+    
     public AbstractDBUtility getDBUtil() {
         return dbutil;
     }
@@ -54,7 +58,7 @@ public abstract class AbstractInsertUpdateDAOTester<E extends IdPrivateKeyDTO> {
     @Test
     public void testInsertSelect() {
         E o = createFirst();
-        assertEquals( 1, o.getId() );
+        assertEquals( getDefaultItemCount() + 1, o.getId() );
         
         sleep( 50 );
         
@@ -72,7 +76,7 @@ public abstract class AbstractInsertUpdateDAOTester<E extends IdPrivateKeyDTO> {
     @Test
     public void testUpdateDelete() {
         E o = createFirst();
-        assertEquals( 1, o.getId() );
+        assertEquals( getDefaultItemCount() + 1, o.getId() );
 
         changeFirst( o );
         E o2 = getDAO().selectById( o.getId() );
@@ -89,16 +93,16 @@ public abstract class AbstractInsertUpdateDAOTester<E extends IdPrivateKeyDTO> {
     @Test
     public void testSelectAllDeleteAll() {
         E o = createFirst();
-        assertEquals( 1, o.getId() );
+        assertEquals( getDefaultItemCount() + 1, o.getId() );
 
         o = createSecond();
-        assertEquals( 2, o.getId() );
+        assertEquals( getDefaultItemCount() + 2, o.getId() );
 
-        assertEquals( 2, getDAO().selectCount() );
+        assertEquals( getDefaultItemCount() + 2, getDAO().selectCount() );
         List<E> os = getDAO().selectAll();
-        assertEquals( 2, os.size() );
+        assertEquals( getDefaultItemCount() + 2, os.size() );
 
-        assertEquals( 2, getDAO().deleteAll() );
+        assertEquals( getDefaultItemCount() + 2, getDAO().deleteAll() );
         os = getDAO().selectAll();
         assertEquals( 0, os.size() );
     }
