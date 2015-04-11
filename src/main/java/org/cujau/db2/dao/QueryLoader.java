@@ -32,10 +32,15 @@ public class QueryLoader {
     static DocumentBuilder docParser;
     static ThreadLocalValidator docValidators;
     private static boolean setupComplete = false;
+    private static boolean useDocuementBuilderReset = true;
+
+    public static void setUseDocuementBuilderReset( boolean val ) {
+        useDocuementBuilderReset = val;
+    }
 
     static void setup()
             throws ParserConfigurationException {
-        if ( setupComplete ) {
+        if ( setupComplete && useDocuementBuilderReset ) {
             docParser.reset();
             return;
         }
