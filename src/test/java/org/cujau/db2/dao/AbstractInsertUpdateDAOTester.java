@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.cujau.db2.AbstractDBUtility;
-import org.cujau.db2.DBUtilityTestHelpers;
+import org.cujau.db2.H2DBUtilityHelpers;
 import org.cujau.db2.dto.IdPrivateKeyDTO;
 import org.junit.After;
 import org.junit.Before;
@@ -47,7 +47,7 @@ public abstract class AbstractInsertUpdateDAOTester<E extends IdPrivateKeyDTO> {
     public void before()
             throws IOException {
         dbutil = createDBUtil();
-        DBUtilityTestHelpers.initAndCreateInMemoryDB( dbutil );
+        H2DBUtilityHelpers.initAndCreateInMemoryDB( dbutil );
     }
 
     @After

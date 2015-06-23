@@ -9,10 +9,10 @@ import java.util.Properties;
 
 import org.cujau.db2.AbstractDBUtility;
 import org.cujau.db2.DAOInitializationException;
-import org.cujau.db2.DBUtilityTestHelpers;
+import org.cujau.db2.H2DBUtilityHelpers;
 import org.cujau.db2.Migration;
 import org.cujau.db2.MigrationInitializationException;
-import org.cujau.db2.dao.DAO;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class DBVersionDAOTest {
 
         };
 
-        DBUtilityTestHelpers.initAndCreateInMemoryDB( dbutil );
+        H2DBUtilityHelpers.initAndCreateInMemoryDB( dbutil );
     }
 
     @After

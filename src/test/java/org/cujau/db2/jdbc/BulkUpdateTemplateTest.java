@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.cujau.db2.DBUtilityTestHelpers;
+import org.cujau.db2.H2DBUtilityHelpers;
 import org.cujau.db2.SimpleTestDBUtility;
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +19,7 @@ public class BulkUpdateTemplateTest {
     public void before()
             throws IOException {
         dbutil = new SimpleTestDBUtility();
-        DBUtilityTestHelpers.initAndCreateInMemoryDB( dbutil );
+        H2DBUtilityHelpers.initAndCreateInMemoryDB( dbutil );
     }
 
     @After

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cujau.db2.DBUtilityTestHelpers;
+import org.cujau.db2.H2DBUtilityHelpers;
 import org.cujau.db2.SimpleTestDBUtility;
 import org.cujau.db2.dto.SimpleTestDTO;
 import org.cujau.utils.TimingUtil;
@@ -28,7 +28,7 @@ public class JDBCUtilsTest {
     public void before()
             throws IOException {
         dbutil = new SimpleTestDBUtility();
-        DBUtilityTestHelpers.initAndCreateInMemoryDB( dbutil );
+        H2DBUtilityHelpers.initAndCreateInMemoryDB( dbutil );
     }
 
     @After
