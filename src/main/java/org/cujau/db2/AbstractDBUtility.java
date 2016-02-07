@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
 import java.util.regex.Pattern;
-
 import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.cujau.db2.dao.DAO;
 import org.cujau.db2.dao.DBVersionDAO;
 import org.cujau.db2.jdbc.CujauJDBCTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractDBUtility {
 
@@ -51,8 +51,9 @@ public abstract class AbstractDBUtility {
      * <li><tt>empty</tt> - The empty prefix ("") will be specifically set.</li>
      * <li><tt>none</tt> or <tt>null</tt> - No prefix will be set.</li>
      * </ul>
-     * 
+     *
      * @param prefix
+     *         The table prefix.
      */
     public void setTablePrefix( String prefix ) {
         if ( prefix == null ) {
@@ -150,23 +151,6 @@ public abstract class AbstractDBUtility {
         return daos;
     }
 
-    /*
-     * public void createDBSchema() { for ( DAO dao : daos ) { if ( dao.getCreateQuery() != null ) {
-     * LOG.info( "Creating {}", dao.getClass().getSimpleName() ); template.execute(
-     * dao.getCreateQuery() ); } } }
-     * 
-     * public void dropDBSchema() { dropDBSchema( false ); }
-     * 
-     * public void dropDBSchema( boolean continueOnError ) { ListIterator<DAO> iterator =
-     * daos.listIterator( daos.size() ); while ( iterator.hasPrevious() ) { DAO dao =
-     * iterator.previous(); if ( dao.getCreateQuery() != null ) { try { LOG.info(
-     * "Dropping {} : {}", dao.getClass().getSimpleName(), dao.getDropQuery() ); template.execute(
-     * dao.getDropQuery() ); } catch ( RuntimeException t ) { LOG.error( "Exception on drop.", t );
-     * if ( !continueOnError ) { throw t; } } } } }
-     * 
-     * public CujauJDBCTemplate getMigrationTemplate() { return template; }
-     */
-
     /**
      * Return the value that the db_version table should be set to after the complete schema
      * creation. The db_version table will be updated to this value after the schema has been
@@ -174,15 +158,16 @@ public abstract class AbstractDBUtility {
      * <p>
      * Returning -1 means that the db_version table will not be updated.
      * </p>
-     * 
+     *
      * @return The value to set in the db_version table after the schema has been created.
      */
     protected abstract int getPostSchemaCreationDBVersion();
 
     /**
      * Returns a list of Migration objects.
-     * 
+     *
      * @param props
+     *         The properties to use during migration.
      * @return The list of Migration objects or <tt>null</tt> if no migrations are necessary.
      * @throws MigrationInitializationException
      */
@@ -192,16 +177,16 @@ public abstract class AbstractDBUtility {
     /**
      * The lowest migration number (i.e. the last migration) to be used in a down migration.
      * Typically the lowest supported schema version number.
-     * 
-     * @return
+     *
+     * @return The lowest supported schema version number.
      */
     public abstract int getLowestMigrationNumber();
 
     /**
      * The highest migration number to which a schema will be migrated up. Typically this is the
      * same as the {@link #getPostSchemaCreationDBVersion} value.
-     * 
-     * @return
+     *
+     * @return The highest supported schema version number.
      */
     public abstract int getHighestMigrationNumber();
 
@@ -229,15 +214,25 @@ public abstract class AbstractDBUtility {
         }
     }
 
+    public boolean needsMigration() {
+        return needsMigration( getHighestMigrationNumber() );
+    }
+
+    public boolean needsMigration( int highestMigrationNumber ) {
+        int dbv = getDBVersion();
+        LOG.info( "DBVersion={}", dbv );
+
+        return dbv < highestMigrationNumber;
+    }
+
     public void migrateDBSchemaUp() {
         migrateDBSchemaUp( getHighestMigrationNumber() );
     }
 
     public void migrateDBSchemaUp( int highestMigrationNumber ) {
-        int dbv = getDBVersion();
-        LOG.info( "DBVersion={}", dbv );
+        if ( needsMigration( highestMigrationNumber ) ) {
+            int dbv = getDBVersion();
 
-        if ( dbv < highestMigrationNumber ) {
             boolean allowedToMigrate = true;
             for ( IDBSchemaListener listener : schemaListeners ) {
                 allowedToMigrate &= listener.preSchemaMigrateUp( this );
@@ -449,7 +444,7 @@ public abstract class AbstractDBUtility {
             // Don't try to execute null or empty queries.
             return;
         }
-        if ( bigQuery.indexOf( QUERY_SEPARATOR ) != -1 ) {
+        if ( bigQuery.contains( QUERY_SEPARATOR ) ) {
             for ( String query : QUERY_SEPARATOR_PATTERN.split( bigQuery ) ) {
                 template.execute( query );
             }
