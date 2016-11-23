@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.sql.DataSource;
 
 import org.cujau.db2.jdbc.exceptions.CujauJDBCEmptyResultSetException;
@@ -20,7 +19,7 @@ import org.cujau.db2.jdbc.exceptions.CujauJDBCPreparationException;
 
 public class CujauJDBCTemplate {
 
-    DataSource ds;
+    private DataSource ds;
 
     public CujauJDBCTemplate( DataSource ds ) {
         this.ds = ds;
@@ -55,11 +54,11 @@ public class CujauJDBCTemplate {
                                    Map<String, Object> args ) {
         Connection connection = JDBCUtils.getConnection( getDataSource() );
         PreparedStatement stmt =
-            JDBCUtils.prepareInsertStatement( connection, query, idColumnName, columns, args );
+                JDBCUtils.prepareInsertStatement( connection, query, idColumnName, columns, args );
 
         long id = 0;
         try {
-            /* int executeUpdate = */stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rsKeys = stmt.getGeneratedKeys();
             rsKeys.next();
             // Since we only pass in 1 generated key name, there should be only 1 column
@@ -127,7 +126,9 @@ public class CujauJDBCTemplate {
         }
     }
 
-    public <T> T queryForObject( String query, TypedRowMapper<T> mapper, Object... args ) {
+    public <T> T queryForObject( String query, boolean checkForEmptyResultSet,
+                                 boolean exceptionOnEmptyResultSet, TypedRowMapper<T> mapper,
+                                 Object... args ) {
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -135,14 +136,21 @@ public class CujauJDBCTemplate {
         try {
             connection = JDBCUtils.getConnection( getDataSource() );
             stmt = JDBCUtils.prepareStatement( connection, query, args );
-            rs = queryForResultSet( connection, stmt, true, true );
-
-            return mapper.mapRow( rs, 1 );
+            rs = queryForResultSet( connection, stmt, checkForEmptyResultSet, exceptionOnEmptyResultSet );
+            if ( rs != null ) {
+                return mapper.mapRow( rs, 1 );
+            }
         } catch ( SQLException e ) {
             throw new CujauJDBCMappingException( e );
         } finally {
             JDBCUtils.cleanup( connection, stmt, rs );
         }
+
+        return null;
+    }
+
+    public <T> T queryForObject( String query, TypedRowMapper<T> mapper, Object... args ) {
+        return queryForObject( query, true, true, mapper, args );
     }
 
     public int update( String query, Object... args ) {
@@ -256,8 +264,8 @@ public class CujauJDBCTemplate {
         }
     }
 
-    protected ResultSet queryForResultSet( Connection connection, PreparedStatement stmt,
-                                           boolean checkForEmptyResultSet, boolean exceptionOnEmptyResultSet ) {
+    private ResultSet queryForResultSet( Connection connection, PreparedStatement stmt,
+                                         boolean checkForEmptyResultSet, boolean exceptionOnEmptyResultSet ) {
         ResultSet rs = null;
         try {
             rs = stmt.executeQuery();
