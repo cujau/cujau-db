@@ -276,8 +276,8 @@ public class CujauJDBCTemplate {
         try {
             if ( checkForEmptyResultSet ) {
                 if ( !rs.next() ) {
+                    JDBCUtils.cleanup( null, null, rs );
                     if ( exceptionOnEmptyResultSet ) {
-                        JDBCUtils.cleanup( null, null, rs );
                         throw new CujauJDBCEmptyResultSetException();
                     } else {
                         return null;
