@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.cujau.db2.AbstractDBUtility;
+import org.cujau.db2.AbstractDBUtilityImpl;
 import org.cujau.db2.DAOInitializationException;
 import org.cujau.db2.H2DBUtilityHelpers;
 import org.cujau.db2.Migration;
@@ -24,7 +25,7 @@ public class DBVersionDAOTest {
     @Before
     public void before()
             throws IOException {
-        dbutil = new AbstractDBUtility() {
+        dbutil = new AbstractDBUtilityImpl() {
 
             @Override
             public List<DAO> instantiateDAOs( Properties props )

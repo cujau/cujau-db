@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.cujau.db2.AbstractDBUtility;
-import org.cujau.db2.DAOInitializationException;
 import org.cujau.db2.dao.DAO;
 import org.cujau.db2.dao.SimpleTestDAO;
 
 
-public class SimpleTestDBUtility extends AbstractDBUtility {
+public class SimpleTestDBUtility extends AbstractDBUtilityImpl {
 
     private SimpleTestDAO simpleDao;
     

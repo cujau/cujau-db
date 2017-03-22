@@ -15,7 +15,7 @@ import org.cujau.db2.migrations.Test2Migration;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestDBUtility extends AbstractDBUtility {
+public class TestDBUtility extends AbstractDBUtilityImpl {
 
     TestInfoDAO testinfoDao;
 
