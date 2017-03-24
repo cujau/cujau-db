@@ -12,13 +12,13 @@ import org.cujau.db2.DAOInitializationException;
 import org.cujau.db2.dto.SimpleTestDTO;
 import org.cujau.db2.jdbc.TypedRowMapper;
 
-public class SimpleTestDAO extends AbstractInsertUpdateDAO<SimpleTestDTO> {
+public class SimpleTestDAO extends AbstractInsertUpdateDAOImpl<SimpleTestDTO> {
 
     private static final String TABLE_NAME = "simple_test";
 
-    public SimpleTestDAO( Properties props, AbstractDBUtility dbutil )
+    public SimpleTestDAO(Properties props, AbstractDBUtility dbutil)
             throws DAOInitializationException {
-        super( props, dbutil );
+        super(props, dbutil);
     }
 
     @Override
@@ -32,25 +32,25 @@ public class SimpleTestDAO extends AbstractInsertUpdateDAO<SimpleTestDTO> {
     }
 
     @Override
-    public Map<String, Object> fillParams( SimpleTestDTO dtoObj, Map<String, Object> params ) {
-        params.put( "is_useful", dtoObj.isUseful() );
-        params.put( "name", dtoObj.getName() );
-        params.put( "symbol", dtoObj.getSymbol() );
-        params.put( "cash", dtoObj.getCash() );
+    public Map<String, Object> fillParams(SimpleTestDTO dtoObj, Map<String, Object> params) {
+        params.put("is_useful", dtoObj.isUseful());
+        params.put("name", dtoObj.getName());
+        params.put("symbol", dtoObj.getSymbol());
+        params.put("cash", dtoObj.getCash());
         return params;
     }
 
     protected class SimpleTestRowMapper implements TypedRowMapper<SimpleTestDTO> {
         @Override
-        public SimpleTestDTO mapRow( ResultSet rs, int rowNum )
+        public SimpleTestDTO mapRow(ResultSet rs, int rowNum)
                 throws SQLException {
             SimpleTestDTO row = new SimpleTestDTO();
-            mapIdentityRow( row, rs, rowNum );
+            mapIdentityRow(row, rs, rowNum);
 
-            row.setUseful( rs.getBoolean( "is_useful" ) );
-            row.setName( rs.getString( "name" ) );
-            row.setSymbol( rs.getString( "symbol" ) );
-            row.setCash( rs.getBigDecimal( "cash" ) );
+            row.setUseful(rs.getBoolean("is_useful"));
+            row.setName(rs.getString("name"));
+            row.setSymbol(rs.getString("symbol"));
+            row.setCash(rs.getBigDecimal("cash"));
             return row;
         }
     }
@@ -58,10 +58,10 @@ public class SimpleTestDAO extends AbstractInsertUpdateDAO<SimpleTestDTO> {
     @Override
     public List<String> getColumnNames() {
         List<String> columns = new ArrayList<String>();
-        columns.add( "is_useful" );
-        columns.add( "name" );
-        columns.add( "symbol" );
-        columns.add( "cash" );
+        columns.add("is_useful");
+        columns.add("name");
+        columns.add("symbol");
+        columns.add("cash");
         return columns;
     }
 }

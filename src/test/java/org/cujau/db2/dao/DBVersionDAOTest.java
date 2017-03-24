@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import org.cujau.db2.AbstractDBUtility;
 import org.cujau.db2.AbstractDBUtilityImpl;
 import org.cujau.db2.DAOInitializationException;
@@ -14,13 +18,9 @@ import org.cujau.db2.H2DBUtilityHelpers;
 import org.cujau.db2.Migration;
 import org.cujau.db2.MigrationInitializationException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 public class DBVersionDAOTest {
 
-    AbstractDBUtility dbutil;
+    private AbstractDBUtility dbutil;
 
     @Before
     public void before()
@@ -28,9 +28,9 @@ public class DBVersionDAOTest {
         dbutil = new AbstractDBUtilityImpl() {
 
             @Override
-            public List<DAO> instantiateDAOs( Properties props )
+            public List<DAO> instantiateDAOs(Properties props)
                     throws DAOInitializationException {
-                return new ArrayList<DAO>();
+                return new ArrayList<>();
             }
 
             @Override
@@ -40,7 +40,7 @@ public class DBVersionDAOTest {
             }
 
             @Override
-            public List<Migration> instantiateMigrations( Properties props )
+            public List<Migration> instantiateMigrations(Properties props)
                     throws MigrationInitializationException {
                 // TODO Auto-generated method stub
                 return null;
@@ -60,7 +60,7 @@ public class DBVersionDAOTest {
 
         };
 
-        H2DBUtilityHelpers.initAndCreateInMemoryDB( dbutil );
+        H2DBUtilityHelpers.initAndCreateInMemoryDB(dbutil);
     }
 
     @After
@@ -70,13 +70,13 @@ public class DBVersionDAOTest {
 
     @Test
     public void testDefaultVersion() {
-        assertEquals( 0, dbutil.getDBVersionDAO().getVersion() );
+        assertEquals(0, dbutil.getDBVersionDAO().getVersion());
     }
 
     @Test
     public void testUpdateVersion() {
-        assertEquals( 0, dbutil.getDBVersionDAO().getVersion() );
-        dbutil.getDBVersionDAO().setVersion( 5 );
-        assertEquals( 5, dbutil.getDBVersionDAO().getVersion() );
+        assertEquals(0, dbutil.getDBVersionDAO().getVersion());
+        dbutil.getDBVersionDAO().setVersion(5);
+        assertEquals(5, dbutil.getDBVersionDAO().getVersion());
     }
 }

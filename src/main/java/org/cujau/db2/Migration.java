@@ -18,7 +18,7 @@ public interface Migration {
      * After a migration has been migrated up, the db_version will be set to this number. After a
      * migration has been migrated down, the db_version will be set to this number - 1.
      * </p>
-     * 
+     *
      * @return An integer specifying this migration's sequential order.
      */
     Integer getMigrationNumber();
@@ -26,12 +26,12 @@ public interface Migration {
     /**
      * Get a list of SQL statements that migrate the database up to the state that the database is
      * required to be in after this Migration has occured.
-     * 
+     *
      * @param dbutil
-     *            The database utility object.
+     *         The database utility object.
      * @return A List of SQL migration statements.
      */
-    List<String> up( AbstractDBUtility dbutil );
+    List<String> up(AbstractDBUtility dbutil);
 
     /**
      * Get a list of SQL statements that migrate the database down to the state that the database
@@ -40,11 +40,11 @@ public interface Migration {
      * These statements should undo any changes described by the statements returned from the
      * {@link #up} method.
      * </p>
-     * 
+     *
      * @param dbutil
-     *            The database utility object.
+     *         The database utility object.
      * @return A List of SQL migration statements.
      */
-    List<String> down( AbstractDBUtility dbutil );
+    List<String> down(AbstractDBUtility dbutil);
 
 }

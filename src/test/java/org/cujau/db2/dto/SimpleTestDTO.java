@@ -16,7 +16,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
     }
 
     @Override
-    public void setId( long id ) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -24,7 +24,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
         return name;
     }
 
-    public void setName( String name ) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -32,7 +32,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
         return isUseful;
     }
 
-    public void setUseful( boolean isUseful ) {
+    public void setUseful(boolean isUseful) {
         this.isUseful = isUseful;
     }
 
@@ -40,7 +40,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
         return symbol;
     }
 
-    public void setSymbol( String sym ) {
+    public void setSymbol(String sym) {
         this.symbol = sym;
     }
 
@@ -48,7 +48,7 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
         return cash;
     }
 
-    public void setCash( BigDecimal c ) {
+    public void setCash(BigDecimal c) {
         this.cash = c;
     }
 
@@ -56,51 +56,51 @@ public class SimpleTestDTO implements IdPrivateKeyDTO {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ( prime * result ) + ( ( cash == null ) ? 0 : cash.hashCode() );
-        result = ( prime * result ) + (int) ( id ^ ( id >>> 32 ) );
-        result = ( prime * result ) + ( isUseful ? 1231 : 1237 );
-        result = ( prime * result ) + ( ( name == null ) ? 0 : name.hashCode() );
-        result = ( prime * result ) + ( ( symbol == null ) ? 0 : symbol.hashCode() );
+        result = (prime * result) + ((cash == null) ? 0 : cash.hashCode());
+        result = (prime * result) + (int) (id ^ (id >>> 32));
+        result = (prime * result) + (isUseful ? 1231 : 1237);
+        result = (prime * result) + ((name == null) ? 0 : name.hashCode());
+        result = (prime * result) + ((symbol == null) ? 0 : symbol.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if ( obj == null ) {
+        if (obj == null) {
             return false;
         }
-        if ( getClass() != obj.getClass() ) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         SimpleTestDTO other = (SimpleTestDTO) obj;
-        if ( cash == null ) {
-            if ( other.cash != null ) {
+        if (cash == null) {
+            if (other.cash != null) {
                 return false;
             }
-        } else if ( cash.compareTo( other.cash ) != 0 ) {
+        } else if (cash.compareTo(other.cash) != 0) {
             return false;
         }
-        if ( id != other.id ) {
+        if (id != other.id) {
             return false;
         }
-        if ( isUseful != other.isUseful ) {
+        if (isUseful != other.isUseful) {
             return false;
         }
-        if ( name == null ) {
-            if ( other.name != null ) {
+        if (name == null) {
+            if (other.name != null) {
                 return false;
             }
-        } else if ( !name.equals( other.name ) ) {
+        } else if (!name.equals(other.name)) {
             return false;
         }
-        if ( symbol == null ) {
-            if ( other.symbol != null ) {
+        if (symbol == null) {
+            if (other.symbol != null) {
                 return false;
             }
-        } else if ( !symbol.equals( other.symbol ) ) {
+        } else if (!symbol.equals(other.symbol)) {
             return false;
         }
         return true;

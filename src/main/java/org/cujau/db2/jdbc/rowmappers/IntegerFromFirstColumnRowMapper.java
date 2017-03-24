@@ -8,9 +8,9 @@ import org.cujau.db2.jdbc.TypedRowMapper;
 public class IntegerFromFirstColumnRowMapper implements TypedRowMapper<Integer> {
 
     @Override
-    public Integer mapRow( ResultSet rs, int rowNumber )
+    public Integer mapRow(ResultSet rs, int rowNumber)
             throws SQLException {
-        return rs.getInt( 1 );
+        return rs.getInt(1);
     }
 
 }

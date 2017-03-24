@@ -7,19 +7,18 @@ import java.util.Properties;
 import org.cujau.db2.dao.DAO;
 import org.cujau.db2.dao.SimpleTestDAO;
 
-
 public class SimpleTestDBUtility extends AbstractDBUtilityImpl {
 
     private SimpleTestDAO simpleDao;
-    
+
     @Override
-    public List<DAO> instantiateDAOs( Properties props )
+    public List<DAO> instantiateDAOs(Properties props)
             throws DAOInitializationException {
         ArrayList<DAO> ret = new ArrayList<DAO>();
-        
-        simpleDao = new SimpleTestDAO( props, this );
-        ret.add( simpleDao );
-        
+
+        simpleDao = new SimpleTestDAO(props, this);
+        ret.add(simpleDao);
+
         return ret;
     }
 
@@ -34,7 +33,7 @@ public class SimpleTestDBUtility extends AbstractDBUtilityImpl {
     }
 
     @Override
-    public List<Migration> instantiateMigrations( Properties props )
+    public List<Migration> instantiateMigrations(Properties props)
             throws MigrationInitializationException {
         // TODO Auto-generated method stub
         return null;

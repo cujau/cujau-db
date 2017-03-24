@@ -14,7 +14,7 @@ public class TestInfo {
         return id;
     }
 
-    public void setId( int id ) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -22,7 +22,7 @@ public class TestInfo {
         return key;
     }
 
-    public void setKey( String key ) {
+    public void setKey(String key) {
         this.key = key;
     }
 
@@ -30,7 +30,7 @@ public class TestInfo {
         return val;
     }
 
-    public void setVal( int val ) {
+    public void setVal(int val) {
         this.val = val;
     }
 
@@ -38,7 +38,7 @@ public class TestInfo {
         return prio;
     }
 
-    public void setPrio( String prio ) {
+    public void setPrio(String prio) {
         this.prio = prio;
     }
 }

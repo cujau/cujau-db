@@ -23,14 +23,14 @@ public interface AbstractDBUtility {
             throws IOException;
 
     void setDataSource(DataSourceWithDialect ds)
-                    throws IOException;
+            throws IOException;
 
     void setDataSource(DataSource ds);
 
     DataSource getDataSource();
 
     List<DAO> instantiateDAOs(Properties props)
-                            throws DAOInitializationException;
+            throws DAOInitializationException;
 
     DBVersionDAO getDBVersionDAO();
 
@@ -58,8 +58,7 @@ public interface AbstractDBUtility {
     int getLowestMigrationNumber();
 
     /**
-     * The highest migration number to which a schema will be migrated up. Typically this is the
-     * same as the {@link #getPostSchemaCreationDBVersion} value.
+     * The highest migration number to which a schema will be migrated up.
      *
      * @return The highest supported schema version number.
      */
@@ -91,7 +90,7 @@ public interface AbstractDBUtility {
             throws IOException;
 
     void extractDropDBSchemaScript(OutputStream output)
-                    throws IOException;
+            throws IOException;
 
     Properties getProps();
 

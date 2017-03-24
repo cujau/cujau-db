@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 public interface TypedRowMapper<T> {
 
-    T mapRow( ResultSet rs, int rowNumber ) throws SQLException;
-    
+    T mapRow(ResultSet rs, int rowNumber)
+            throws SQLException;
+
 }
