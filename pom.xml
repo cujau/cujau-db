@@ -5,7 +5,7 @@
 
     <groupId>org.cujau</groupId>
     <artifactId>cujau-db</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
 
     <name>CUJAU-DB</name>
     <description>Common Utilities for Java Appliation Use - Database Framework</description>
