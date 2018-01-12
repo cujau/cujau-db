@@ -9,8 +9,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.cujau.utils.FileUtil;
 
 /**
- * Helpers for settting up in-memory and file-based H2 databases that can be used in unit tests or
- * local developement testing.
+ * Helpers for setting up in-memory and file-based H2 databases that can be used in unit tests or
+ * local development testing.
  */
 public class H2DBUtilityHelpers {
 
@@ -34,7 +34,7 @@ public class H2DBUtilityHelpers {
         // The DB_CLOSE_DELAY=-1 means the contents of an in-memory database will be kept as long
         // as the virtual machine is alive. Otherwise, they are lost when the last connection to the
         // in-memory db is closed.
-        ds.setUrl("jdbc:h2:mem:bedagstddb;MODE=MSSQLServer;DB_CLOSE_DELAY=-1");// DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=4"
+        ds.setUrl("jdbc:h2:mem:cujaustddb;MODE=MSSQLServer;DB_CLOSE_DELAY=-1");// DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=4"
         ds.setUsername("");
         ds.setPassword("");
         dbutil.setDataSource(ds);
