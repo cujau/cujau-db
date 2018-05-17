@@ -82,6 +82,8 @@ public interface AbstractDBUtility {
 
     boolean removeSchemaListener(IDBSchemaListener listener);
 
+    void removeAllSchemaListeners();
+
     List<IDBSchemaListener> getSchemaListeners();
 
     CujauJDBCTemplate getJDBCTemplate();

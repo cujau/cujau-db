@@ -340,6 +340,11 @@ public abstract class AbstractDBUtilityImpl implements AbstractDBUtility {
     }
 
     @Override
+    public void removeAllSchemaListeners() {
+        schemaListeners = new ArrayList<>();
+    }
+
+    @Override
     public List<IDBSchemaListener> getSchemaListeners() {
         return schemaListeners;
     }
