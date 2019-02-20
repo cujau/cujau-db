@@ -18,8 +18,8 @@ import org.cujau.db2.jdbc.CujauJDBCTemplate;
 import org.cujau.xml.ThreadLocalValidator;
 
 /**
- * Base DAO class providing the standard DAO functionality. Extending classes must have defined an
- * XSQL file containing the specific SQL queries used by this DAO.
+ * Base DAO class providing the standard DAO functionality. Extending classes must have defined an XSQL file containing
+ * the specific SQL queries used by this DAO.
  */
 public abstract class DAOImpl implements DAO {
 
@@ -57,8 +57,7 @@ public abstract class DAOImpl implements DAO {
     }
 
     /**
-     * Extending classes can override to create specific JDBC templates (such as the
-     * SimpleInsertTemplate).
+     * Extending classes can override to create specific JDBC templates (such as the SimpleInsertTemplate).
      *
      * @param dataSource
      *         the DataSource
@@ -84,12 +83,18 @@ public abstract class DAOImpl implements DAO {
         return queryMap.get(id);
     }
 
-    protected String getQueryWithReplacement(String id, String placeholderPropName, String replacementStr) {
+    protected String getQueryWithReplacement(String id, String... values) {
         String baseStr = queryMap.get(id);
         if (baseStr == null) {
             return null;
         }
-        return baseStr.replace("${" + placeholderPropName + "}", replacementStr);
+        if (values.length % 2 != 0) {
+            return baseStr;
+        }
+        for (int i = 0; i < values.length; i = i + 2) {
+            baseStr = baseStr.replace("${" + values[i] + "}", values[i + 1]);
+        }
+        return baseStr;
     }
 
     /**
@@ -132,7 +137,7 @@ public abstract class DAOImpl implements DAO {
 
     private Map<String, String> loadQueries(Class<?> klass, Properties props)
             throws DAOInitializationException {
-        Map<String, String> queries = null;
+        Map<String, String> queries;
         try {
             queries = QueryLoader.loadQueries(klass, props);
         } catch (Exception e) {
