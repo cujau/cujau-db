@@ -34,7 +34,8 @@ public class H2DBUtilityHelpers {
         // The DB_CLOSE_DELAY=-1 means the contents of an in-memory database will be kept as long
         // as the virtual machine is alive. Otherwise, they are lost when the last connection to the
         // in-memory db is closed.
-        ds.setUrl("jdbc:h2:mem:cujaustddb;MODE=MSSQLServer;DB_CLOSE_DELAY=-1");// DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=4"
+        ds.setUrl("jdbc:h2:mem:cujaustddb-"
+                  + System.currentTimeMillis());// MODE=MSSQLServer;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=4"
         ds.setUsername("");
         ds.setPassword("");
         dbutil.setDataSource(ds);
